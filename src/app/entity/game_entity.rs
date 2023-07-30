@@ -3,22 +3,21 @@ use bevy::{prelude::*, utils::Uuid};
 #[derive(Component, Debug)]
 pub struct GameEntity {
     pub uuid: Uuid,
+    // world position
+    pub position: Vec3,
 }
 
 impl GameEntity {
-    pub fn new() -> Self {
-        println!("Spawning a new game entity");
-        GameEntity {
-            uuid: Uuid::new_v4(),
-        }
+    pub fn update_entity_position(&mut self, new_pos: Vec3) {
+        self.position += new_pos;
     }
 }
 
 impl Default for GameEntity {
     fn default() -> Self {
-        println!("Spawning a default game entity");
         Self {
             uuid: Uuid::new_v4(),
+            position: Vec3::ZERO,
         }
     }
 }
