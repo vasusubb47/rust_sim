@@ -1,5 +1,5 @@
 use bevy::prelude::*;
-use bevy::window::{PresentMode, WindowMode};
+use bevy::window::PresentMode;
 
 mod app;
 use app::*;
@@ -9,7 +9,6 @@ fn main() {
         .add_plugins(DefaultPlugins.set(WindowPlugin {
             primary_window: Some(Window {
                 title: "Simulation".into(),
-                mode: WindowMode::Windowed,
                 present_mode: PresentMode::AutoVsync,
                 ..default()
             }),

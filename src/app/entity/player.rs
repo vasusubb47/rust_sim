@@ -3,7 +3,9 @@ use bevy::{prelude::*, window::PrimaryWindow};
 use super::{game_entity::GameEntity, moveable_game_entity::MoveableGameEntity};
 
 #[derive(Debug, Component)]
-pub struct Player;
+pub struct Player {
+    pub size: Vec2,
+}
 
 fn spawn_player(
     mut command: Commands,
@@ -14,6 +16,9 @@ fn spawn_player(
 
     let x = window.width() / 2.0;
     let y = window.height() / 2.0;
+
+    // let x = 0.0;
+    // let y = 0.0;
 
     command.spawn((
         SpriteBundle {
@@ -26,7 +31,9 @@ fn spawn_player(
             ..default()
         },
         MoveableGameEntity::new(500.0),
-        Player,
+        Player {
+            size: Vec2::new(128.0, 128.0),
+        },
     ));
     println!("Player initialized");
 }
@@ -38,8 +45,6 @@ fn player_movement(
 ) {
     if let Ok((mut game_entity, moveable_game_entity)) = player.get_single_mut() {
         let mut direction = Vec3::ZERO;
-
-        // println!("tracking player input");
 
         if keyboard_input.pressed(KeyCode::A) {
             direction += Vec3::new(-1.0, 0.0, 0.0);
@@ -75,6 +80,5 @@ impl Plugin for PlayerPlugin {
         app.add_startup_system(spawn_player);
         app.add_system(player_movement);
         app.add_system(update_transform.after(player_movement));
-        // app.add_system(MoveableGameEntity::update_entity);
     }
 }
